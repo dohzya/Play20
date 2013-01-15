@@ -525,14 +525,19 @@ case class Response(ahcResponse: AHCResponse) {
   }
 
   /**
+   * The response body as InputStream
+   */
+  def bodyAsInputStream: java.io.InputStream = ahcResponse.getResponseBodyAsStream()
+
+  /**
    * The response body as Xml.
    */
-  lazy val xml: Elem = XML.loadString(body)
+  lazy val xml: Elem = XML.loadString(bodyAsStream)
 
   /**
    * The response body as Json.
    */
-  lazy val json: JsValue = Json.parse(ahcResponse.getResponseBodyAsBytes)
+  lazy val json: JsValue = Json.parse(bodyAsStream)
 
 }
 
